@@ -1,0 +1,79 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="style.css">
+        <script src="script.js"></script>
+    </head>
+    <body>
+        <h1>Where's Bernie?</h1>
+        <div id="container" class="container">
+            <canvas id="waldo-canvas">Canvas unsupported, sorry!</canvas>
+        </div>
+
+        <script>
+            const canvas = document.getElementById('waldo-canvas');
+            const ctx = canvas.getContext('2d');
+
+            const container = document.getElementById("container").getBoundingClientRect();
+            console.log(container);
+            canvas.width = container.width;
+            let loadedImages = 0;
+
+            const bg = new Image(2800, 1760);
+            bg.onload = imageLoaded;
+            bg.src = 'waldo.jpg';
+
+            const bgRatio = container.width / bg.width;
+            const bgWidth = bg.width * bgRatio;
+            const bgHeight = bg.height * bgRatio;
+            canvas.height = bgHeight;
+
+            let bernieWidth, bernieHeight, bernieX, bernieY;
+
+            const bernie = new Image(561, 1078);
+            bernie.onload = imageLoaded;
+            bernie.src = 'bernie.png';
+
+            function drawBackground() {
+                ctx.drawImage(bg, 0, 0, bgWidth, bgHeight);
+            }
+
+            function imageLoaded() {
+                loadedImages++;
+                if (loadedImages == 2) render();
+            }
+
+            function render() {
+                drawBackground();
+                drawBernie();
+            }
+
+            function drawBernie() {
+                const ratio = .1;
+                bernieWidth = bernie.width * ratio;
+                bernieHeight = bernie.height * ratio;
+
+                bernieX = Math.floor(Math.random() * Math.floor(bgWidth - bernieWidth));
+                bernieY = Math.floor(Math.random() * Math.floor(bgHeight - bernieHeight));
+                console.log(bernieX);
+                console.log(bernieY)
+
+                ctx.drawImage(bernie, bernieX, bernieY, bernieWidth, bernieHeight);
+            }
+
+            canvas.addEventListener("mousedown", function(e) {
+                const x = e.clientX - container.left;
+                const y = e.clientY - container.top;
+                console.log(`x: ${x}, y: ${y}`)
+                const tolerance = 10;
+
+                if (x > bernieX - tolerance &&
+                    x < bernieX + bernieWidth + tolerance &&
+                    y > bernieY - tolerance &&
+                    y < bernieY + bernieHeight + tolerance) {
+                    alert("I am once again letting you know that you have found Bernie.");
+                }
+            });
+
+        </script>
+    </body>
+</html>

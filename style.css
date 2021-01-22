@@ -1,0 +1,9 @@
+html {
+    text-align: center;
+}
+
+.container {
+    width: 80%;
+    height: 80%;
+    margin: 0 auto;
+}
