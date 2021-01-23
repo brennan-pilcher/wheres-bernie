@@ -27,7 +27,6 @@
             const ctx = canvas.getContext('2d');
 
             const container = document.getElementById("container").getBoundingClientRect();
-            console.log(container);
             canvas.width = container.width;
             let loadedImages = 0;
 
@@ -41,7 +40,6 @@
             const bgWidth = bg.width * bgRatio;
             const bgHeight = bg.height * bgRatio;
             canvas.height = bgHeight;
-            console.log(canvas);
 
             let bernieWidth, bernieHeight, bernieX, bernieY;
             let titleCardWidth, titleCardHeight;
@@ -89,13 +87,9 @@
                 bernieY = Math.floor(Math.random() * Math.floor(bgHeight - bernieHeight));
 
                 if (bernieX < titleCardWidth && bernieY < titleCardHeight) {
-                    console.log("over title card");
                     bernieX += titleCardWidth;
                     bernieY += titleCardHeight;
                 }
-
-                console.log(bernieX);
-                console.log(bernieY)
 
                 ctx.drawImage(bernie, bernieX, bernieY, bernieWidth, bernieHeight);
             }
@@ -105,7 +99,6 @@
             canvas.addEventListener("mousedown", function(e) {
                 const x = e.clientX - container.left;
                 const y = e.clientY - container.top;
-                console.log(`x: ${x}, y: ${y}`)
                 const tolerance = 10;
 
                 if (x > bernieX - tolerance &&
