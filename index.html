@@ -29,15 +29,18 @@
 
             const bg = new Image(579, 768);
             bg.onload = imageLoaded;
-            bg.src = 'backgrounds/1.jpg';
+            bg.src = `backgrounds/${Math.floor(Math.random() * Math.floor(3))+1}.jpg`;
 
             const bgRatio = container.width / bg.width;
+
+
             const bgWidth = bg.width * bgRatio;
             const bgHeight = bg.height * bgRatio;
             canvas.height = bgHeight;
             console.log(canvas);
 
             let bernieWidth, bernieHeight, bernieX, bernieY;
+            let titleCardWidth, titleCardHeight;
 
             const titleCard = new Image(676, 552);
             titleCard.onload = imageLoaded;
@@ -68,7 +71,9 @@
             
             function drawTitleCard() {
                 const cardRatio = ((bgWidth * 0.5) / titleCard.width);
-                ctx.drawImage(titleCard, 0, 0, scaleBasedOnRatio(cardRatio, titleCard.width), scaleBasedOnRatio(cardRatio, titleCard.height));
+                titleCardWidth = scaleBasedOnRatio(cardRatio, titleCard.width)
+                titleCardHeight = scaleBasedOnRatio(cardRatio, titleCard.height)
+                ctx.drawImage(titleCard, 0, 0, titleCardWidth, titleCardHeight);
             }
 
             function drawBernie() {
@@ -78,6 +83,13 @@
 
                 bernieX = Math.floor(Math.random() * Math.floor(bgWidth - bernieWidth));
                 bernieY = Math.floor(Math.random() * Math.floor(bgHeight - bernieHeight));
+
+                if (bernieX < titleCardWidth && bernieY < titleCardHeight) {
+                    console.log("over title card");
+                    bernieX += titleCardWidth;
+                    bernieY += titleCardHeight;
+                }
+
                 console.log(bernieX);
                 console.log(bernieY)
 
@@ -97,6 +109,7 @@
                     y > bernieY - tolerance &&
                     y < bernieY + bernieHeight + tolerance) {
                     alert("I am once again letting you know that you have found Bernie.");
+                    location.reload();
                 }
             });
 
