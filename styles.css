@@ -12,18 +12,23 @@ canvas {
     margin: 2.5% auto;
 }
 
+.cta {
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+    font-size: 2em;
+    color: #C0E0DE;
+}
+
 @media (min-width: 1050px) {
     .container {
         width: 30%;
     }
+    
+    .cta {
+        font-size: 1.2em;
+    }
 }
 
-.cta {
-    font-family: Arial, sans-serif;
-    font-weight: bold;
-    font-size: 16px;
-    color: #C0E0DE;
-}
 
 a {
     color: #4F7CAC;
