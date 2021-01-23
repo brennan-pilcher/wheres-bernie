@@ -7,3 +7,10 @@ html {
     width: 98%;
     margin: 0 auto;
 }
+
+@media (min-width: 1000px) {
+    .container {
+        width: 50%;
+        margin: 0 auto;
+    }
+}
