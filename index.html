@@ -35,10 +35,11 @@
             const bgWidth = bg.width * bgRatio;
             const bgHeight = bg.height * bgRatio;
             canvas.height = bgHeight;
+            console.log(canvas);
 
             let bernieWidth, bernieHeight, bernieX, bernieY;
 
-            const titleCard = new Image(477, 381);
+            const titleCard = new Image(676, 552);
             titleCard.onload = imageLoaded;
             titleCard.src = 'wheres-bernie.png';
 
@@ -66,13 +67,14 @@
             }
             
             function drawTitleCard() {
-                ctx.drawImage(titleCard, 0, 0, titleCard.width, titleCard.height);
+                const cardRatio = ((bgWidth * 0.5) / titleCard.width);
+                ctx.drawImage(titleCard, 0, 0, scaleBasedOnRatio(cardRatio, titleCard.width), scaleBasedOnRatio(cardRatio, titleCard.height));
             }
 
             function drawBernie() {
-                const ratio = .1;
-                bernieWidth = bernie.width * ratio;
-                bernieHeight = bernie.height * ratio;
+                const bernieRatio = ((bgWidth * 0.08) / bernie.width);
+                bernieWidth = scaleBasedOnRatio(bernieRatio, bernie.width);
+                bernieHeight = scaleBasedOnRatio(bernieRatio, bernie.height);
 
                 bernieX = Math.floor(Math.random() * Math.floor(bgWidth - bernieWidth));
                 bernieY = Math.floor(Math.random() * Math.floor(bgHeight - bernieHeight));
@@ -81,6 +83,8 @@
 
                 ctx.drawImage(bernie, bernieX, bernieY, bernieWidth, bernieHeight);
             }
+
+            const scaleBasedOnRatio = (ratio, value) => Math.floor(value * ratio);
 
             canvas.addEventListener("mousedown", function(e) {
                 const x = e.clientX - container.left;
