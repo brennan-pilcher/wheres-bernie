@@ -6,12 +6,14 @@
             name="description"
             content="Where's Bernie?"
         />
+        <meta property="og:image" content="title-card.jpg">
+        <meta name="twitter:card" content="summary_large_image">
+
         <title>Where's Bernie?</title>
         <link rel="stylesheet" href="style.css">
         <script src="script.js"></script>
     </head>
     <body>
-        <h1>Where's Bernie?</h1>
         <div id="container" class="container">
             <canvas id="waldo-canvas">Canvas unsupported, sorry!</canvas>
         </div>
@@ -36,22 +38,35 @@
 
             let bernieWidth, bernieHeight, bernieX, bernieY;
 
+            const titleCard = new Image(477, 381);
+            titleCard.onload = imageLoaded;
+            titleCard.src = 'wheres-bernie.png';
+
             const bernie = new Image(561, 1078);
             bernie.onload = imageLoaded;
             bernie.src = 'bernie.png';
 
-            function drawBackground() {
-                ctx.drawImage(bg, 0, 0, bgWidth, bgHeight);
-            }
+            ctx.fillStyle = 'black';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
 
             function imageLoaded() {
                 loadedImages++;
-                if (loadedImages == 2) render();
+                if (loadedImages == 3) render();
             }
 
             function render() {
                 drawBackground();
+                drawTitleCard();
                 drawBernie();
+            }
+
+            function drawBackground() {
+                ctx.drawImage(bg, 0, 0, bgWidth, bgHeight);
+            }
+            
+            function drawTitleCard() {
+                ctx.drawImage(titleCard, 0, 0, titleCard.width, titleCard.height);
             }
 
             function drawBernie() {
